@@ -32,3 +32,13 @@ Route::get('/list/editList/{id}', 'ListesController@edit');
 Route::post('/list/updateList/{id}', 'ListesController@update');
 Route::delete('/list/deleteList/{id}', 'ListesController@delete');
 Route::get('/list', 'ListesController@list');
+
+Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});
+
+
+Route::post('register', 'AuthController@register');

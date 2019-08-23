@@ -1,102 +1,34 @@
 require('./bootstrap');
+
 window.Vue = require('vue');
-
-  
-
-import VueRouter from 'vue-router';
+import VueRouter from "vue-router";
+import Vuex from "vuex";
+import {
+    routes
+} from "./routes";
+import StoreData from "./store";
+import MainApp from "./components/MainApp.vue";
+import {
+    initialize
+} from "./helpers/general";
 
 Vue.use(VueRouter);
+Vue.use(Vuex);
 
-  
+const store = new Vuex.Store(StoreData);
 
-import VueAxios from 'vue-axios';
+const router = new VueRouter({
+    routes,
+    mode: "history"
+});
 
-import axios from 'axios';
+initialize(store, router);
 
-  
-
-import App from './App.vue';
-
-Vue.use(VueAxios, axios);
-
-
-
-import CreateItemComponent from './components/CreateItemComponent.vue';
-import CreateListComponent from './components/CreateListComponent.vue';
-
-import DeleteItemComponent from './components/DeleteItemComponent.vue';
-import DeleteListComponent from './components/DeleteListComponent.vue';
-
-import ListComponent from './components/ListComponent.vue';
-import ItemComponent from './components/ItemComponent.vue';
-
-import HomeComponent from './components/HomeComponent.vue';
-
-import EditListComponent from './components/EditListComponent.vue';
-import EditItemComponent from './components/EditItemComponent.vue';
-
-const routes = [
-  
-    {name: 'home',
-    path: '/',
-    component: HomeComponent
-    },
-    
-    {name: 'createList',
-    path: '/createList',
-    component: CreateListComponent
-    },
-
-    {name: 'createItem',
-    path: '/createItem',
-    component: CreateItemComponent   
-    },
-    
-    {name: 'deleteItem',
-    path: '/deleteItem',
-    component: DeleteItemComponent
-    },
-
-    {name: 'deleteList',
-    path: '/deleteList',
-    component: DeleteListComponent
-    },
-
-    {name: 'editItem',
-    path: '/editItem/:id',
-    component: EditItemComponent
-    },
-
-    {name: 'editList',
-    path: '/editList/:id',
-    component: EditListComponent
-    },
-
-    {name: 'list',
-    path: '/list',
-    component: ListComponent},
-
-    {name: 'item',
-    path: '/item',
-    component: ItemComponent},
-
- 
-    
-    // {
-    
-    //     name: 'posts',
-        
-    //     path: '/posts',
-        
-    //     component: IndexComponent
-        
-    //     },
-
-
-
-
-    ];
-
-    const router = new VueRouter({ mode: 'history', routes: routes});
-  
-    const app = new Vue(Vue.util.extend({ router }, App)).$mount('#app');
+const app = new Vue({
+    el: '#app',
+    router,
+    store,
+    components: {
+        MainApp
+    }
+});

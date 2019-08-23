@@ -6,76 +6,65 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>List Title:</label>
-            <input type="text" class="form-control" v-model="list.nameList">
-            <router-link to='/createItem'><button class="btn btn-primary"> Add Item  </button></router-link>
+            <input type="text" class="form-control" v-model="list.nameList" />
+            <router-link to="/createItem">
+              <button class="btn btn-primary">Add Item</button>
+            </router-link>
           </div>
         </div>
-        </div>
-        
-        <br />
-        <div class="form-group">
-          <button class="btn btn-primary">Edit List</button>
-        </div>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <button class="btn btn-primary">Edit List</button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
-
-
 export default {
-        data() {
-        return {
-            list: {},
-            item: {}
-        }
-        },
+  data() {
+    return {
+      list: {},
+      item: {}
+    };
+  },
 
-        created() {
-        let uri = `/api/list/editList/${this.$route.params.id}`;
+  created() {
+    let uri = `/api/list/editList/${this.$route.params.id}`;
 
-            this.axios.get(uri).then((response) => {
-                this.list = response.data;
-            });
+    axios.get(uri).then(response => {
+      this.list = response.data;
+    });
 
-        let uriO = '/api/item';
-            this.axios.get(uriO).then(response => {
-            this.items = response.data.data;
-        });
-        },
+    let uriO = "/api/item";
+    axios.get(uriO).then(response => {
+      this.items = response.data.data;
+    });
+  },
 
-        methods: {
+  methods: {
+    updateList() {
+      let uri = `/api/list/updateList/${this.$route.params.id}`;
 
-            updateList() {
+      axios.post(uri, this.list).then(response => {
+        this.$router.push({ name: "list" });
+      });
+    },
 
-                let uri = `/api/list/updateList/${this.$route.params.id}`;
+    addItem() {
+      let uri = "/api/item/createItem";
 
-                this.axios.post(uri, this.list).then((response) => {
+      axios.post(uri, this.item).then(response => {
+        this.$router
+          .push({ name: "item" })
 
-                this.$router.push({name: 'list'});
-
-                });
-            },
-
-            addItem(){
-
-            let uri = '/api/item/createItem';
-
-            this.axios.post(uri, this.item).then((response) => {
-
-            this.$router.push({name: 'item'})
-
-                .catch(error => {
-
-                    console.log('shit happen')
-
-                });
-
-           });
-
-        }
-        }
-
-}
-
+          .catch(error => {
+            console.log("shit happen");
+          });
+      });
+    }
+  }
+};
 </script>
