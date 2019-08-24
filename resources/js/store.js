@@ -86,7 +86,7 @@ export default {
                     "Authorization": `Bearer ${context.state.currentUser.token}`
                 }
             }).then((response) => {
-                context.commit("updateCustomers", response.data.customers);
+                context.commit("updateList", response.data.list);
             });
         }
     }
