@@ -10,7 +10,7 @@ export default {
         isLoggedIn: !!user,
         loading: false,
         auth_error: null,
-        lists: {}
+        lists: [],
     },
     getters: {
         isLoading(state) {
@@ -71,6 +71,9 @@ export default {
             localStorage.removeItem("user");
             state.isLoggedIn = false;
             state.currentUser = null;
+        },
+        updateList(state, payload) {
+            state.lists = payload;
         }
     },
     actions: {
@@ -86,7 +89,7 @@ export default {
                     "Authorization": `Bearer ${context.state.currentUser.token}`
                 }
             }).then((response) => {
-                context.commit("updateList", response.data.list);
+                context.commit("updateList", response.data.lists);
             });
         }
     }

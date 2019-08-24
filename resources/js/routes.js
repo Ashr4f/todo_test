@@ -6,45 +6,76 @@ import login from './components/auth/Login.vue';
 import Profile from './components/Profile.vue';
 import PageNotFound from './components/PageNotFound.vue';
 
+
+import ListsMain from './components/lists/Main.vue';
+import Lists from './components/lists/Lists.vue';
+import List from './components/lists/View.vue';
+import NewList from './components/lists/New.vue';
+
+/*
 import CreateItemComponent from './components/CreateItemComponent.vue';
 import CreateListComponent from './components/CreateListComponent.vue';
 
 import DeleteItemComponent from './components/DeleteItemComponent.vue';
 import DeleteListComponent from './components/DeleteListComponent.vue';
+*/
 
-import ListComponent from './components/ListComponent.vue';
+
+/*
 import ItemComponent from './components/ItemComponent.vue';
 
 import HomeComponent from './components/HomeComponent.vue';
 
 import EditListComponent from './components/EditListComponent.vue';
 import EditItemComponent from './components/EditItemComponent.vue';
+ */
 
 export const routes = [{
-        path: "*",
-        component: PageNotFound
-    }, {
-        path: "/",
-        component: Home,
-        meta: {
-            requiresAuth: true
+    path: "*",
+    component: PageNotFound
+}, {
+    path: "/",
+    component: Home,
+    meta: {
+        requiresAuth: true
+    }
+},
+{
+    path: "/register",
+    component: register,
+},
+{
+    path: "/login",
+    component: login,
+},
+{
+    path: "/profile",
+    component: Profile,
+    meta: {
+        requiresAuth: true
+    }
+}, {
+    path: '/lists',
+    component: ListsMain,
+    meta: {
+        requiresAuth: true
+    },
+    children: [
+        {
+            path: '/',
+            component: Lists
+        },
+        {
+            path: 'new',
+            component: NewList
+        },
+        {
+            path: ':id',
+            component: List
         }
-    },
-    {
-        path: "/register",
-        component: register,
-    },
-    {
-        path: "/login",
-        component: login,
-    },
-    {
-        path: "/profile",
-        component: Profile,
-        meta: {
-            requiresAuth: true
-        }
-    },
+    ]
+}
+    /*
     {
         name: 'home',
         path: '/',
@@ -108,14 +139,7 @@ export const routes = [{
         }
     },
 
-    {
-        name: 'list',
-        path: '/list',
-        component: ListComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
+    
 
     {
         name: 'item',
@@ -125,4 +149,5 @@ export const routes = [{
             requiresAuth: true
         }
     },
+    */
 ];

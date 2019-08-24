@@ -25,7 +25,7 @@
           </template>
           <template v-else>
             <li>
-              <router-link to="/list" class="nav-link">Lists</router-link>
+              <router-link to="/lists" class="nav-link">Lists</router-link>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -42,6 +42,7 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <router-link to="/profile" class="dropdown-item">Profile</router-link>
                 <a href="javascript:;" @click.prevent="logout" class="dropdown-item">Logout</a>
               </div>
             </li>

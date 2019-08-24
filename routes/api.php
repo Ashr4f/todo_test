@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*
 
 // Items
 Route::post('/item/createItem', 'itemController@store');
@@ -32,6 +33,7 @@ Route::get('/list/editList/{id}', 'ListesController@edit');
 Route::post('/list/updateList/{id}', 'ListesController@update');
 Route::delete('/list/deleteList/{id}', 'ListesController@delete');
 Route::get('/list', 'ListesController@list');
+*/
 
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', 'AuthController@login');
@@ -40,5 +42,10 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthController@me');
 });
 
-
 Route::post('register', 'AuthController@register');
+
+Route::group(['middleware' => 'jwt.auth'], function ($router) {
+    Route::get('lists', 'ListsController@all');
+    Route::get('lists/{id}', 'ListsController@get');
+    Route::post('lists/new', 'ListsController@new');
+});

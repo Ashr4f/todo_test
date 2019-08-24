@@ -2,7 +2,6 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\User;
-use App\listes;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -27,8 +26,8 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(listes::class, function (Faker $faker) {
+$factory->define(App\Lists::class, function (Faker $faker) {
     return [
-        'nameList' => $faker->name,
+        'name' => $faker->name,
     ];
 });
