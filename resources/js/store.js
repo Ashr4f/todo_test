@@ -72,6 +72,9 @@ export default {
             state.isLoggedIn = false;
             state.currentUser = null;
         },
+        resetAuthError(state, payload) {
+            state.auth_error = null;
+        },
         updateList(state, payload) {
             state.lists = payload;
         }

@@ -2076,6 +2076,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "login",
+  mounted: function mounted() {
+    this.$store.commit("resetAuthError");
+  },
   data: function data() {
     return {
       form: {
@@ -2186,6 +2189,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "register",
+  mounted: function mounted() {
+    this.$store.commit("resetAuthError");
+  },
   data: function data() {
     return {
       form: {
@@ -2266,6 +2272,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lists",
   mounted: function mounted() {
@@ -2278,6 +2288,21 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     lists: function lists() {
       return this.$store.getters.lists;
+    }
+  },
+  methods: {
+    remove: function remove(id) {
+      var _this = this;
+
+      axios["delete"]("/api/lists/".concat(id)).then(function (response) {
+        var index = _this.lists.findIndex(function (list) {
+          return list.id === id;
+        });
+
+        if (~index) {
+          _this.lists.splice(index, 1);
+        }
+      });
     }
   }
 });
@@ -2354,19 +2379,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "new",
   data: function data() {
     return {
       list: {
-        name: "",
-        email: "",
-        phone: "",
-        website: ""
+        name: ""
       },
       errors: null
     };
@@ -6925,7 +6944,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nbody[data-v-3d2ec509] {\r\n  background: #dedede;\n}\n.page-wrap[data-v-3d2ec509] {\r\n  min-height: calc(100vh - 6rem);\n}\r\n", ""]);
+exports.push([module.i, "\nbody[data-v-3d2ec509] {\n  background: #dedede;\n}\n.page-wrap[data-v-3d2ec509] {\n  min-height: calc(100vh - 6rem);\n}\n", ""]);
 
 // exports
 
@@ -6944,7 +6963,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-wrapper[data-v-3fab6600] {\r\n  text-align: right;\r\n  margin-bottom: 20px;\n}\r\n", ""]);
+exports.push([module.i, "\n.btn-wrapper[data-v-3fab6600] {\n  text-align: right;\n  margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -6963,7 +6982,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.errors {\r\n  background: lightcoral;\r\n  border-radius: 5px;\r\n  padding: 21px 0 2px 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.errors {\n  background: lightcoral;\n  border-radius: 5px;\n  padding: 21px 0 2px 0;\n}\n", ""]);
 
 // exports
 
@@ -6982,7 +7001,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.list-view[data-v-11c7da0a] {\r\n  display: flex;\r\n  align-items: center;\n}\n.list-info[data-v-11c7da0a] {\r\n  flex: 3;\n}\r\n", ""]);
+exports.push([module.i, "\n.list-view[data-v-11c7da0a] {\n  display: flex;\n  align-items: center;\n}\n.list-info[data-v-11c7da0a] {\n  flex: 3;\n}\n", ""]);
 
 // exports
 
@@ -40568,7 +40587,13 @@ var render = function() {
                         "span",
                         {
                           staticClass: "error text-danger",
-                          staticStyle: { cursor: "pointer" }
+                          staticStyle: { cursor: "pointer" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.remove(list.id)
+                            }
+                          }
                         },
                         [_vm._v("Delete")]
                       )
@@ -40716,10 +40741,7 @@ var render = function() {
             "ul",
             _vm._l(_vm.errors, function(fieldsError, fieldName) {
               return _c("li", { key: fieldName }, [
-                _c("strong", [_vm._v(_vm._s(fieldName))]),
-                _vm._v(
-                  "\n        " + _vm._s(fieldsError.join("\n")) + "\n      "
-                )
+                _vm._v(_vm._s(fieldsError.join("\n")))
               ])
             }),
             0
@@ -57730,7 +57752,6 @@ function register(credentials) {
       res(response.data);
     })["catch"](function (err) {
       rej("Please provide valid informations");
-      console.error(err);
     });
   });
 }
@@ -57891,7 +57912,7 @@ var routes = [{
           requiresAuth: true
       }
   },
-    {
+   {
       name: 'createList',
       path: '/createList',
       component: CreateListComponent,
@@ -57899,7 +57920,7 @@ var routes = [{
           requiresAuth: true
       }
   },
-    {
+   {
       name: 'createItem',
       path: '/createItem',
       component: CreateItemComponent,
@@ -57907,7 +57928,7 @@ var routes = [{
           requiresAuth: true
       }
   },
-    {
+   {
       name: 'deleteItem',
       path: '/deleteItem',
       component: DeleteItemComponent,
@@ -57915,7 +57936,7 @@ var routes = [{
           requiresAuth: true
       }
   },
-    {
+   {
       name: 'deleteList',
       path: '/deleteList',
       component: DeleteListComponent,
@@ -57923,7 +57944,7 @@ var routes = [{
           requiresAuth: true
       }
   },
-    {
+   {
       name: 'editItem',
       path: '/editItem/:id',
       component: EditItemComponent,
@@ -57931,7 +57952,7 @@ var routes = [{
           requiresAuth: true
       }
   },
-    {
+   {
       name: 'editList',
       path: '/editList/:id',
       component: EditListComponent,
@@ -57939,8 +57960,8 @@ var routes = [{
           requiresAuth: true
       }
   },
-    
-    {
+   
+   {
       name: 'item',
       path: '/item',
       component: ItemComponent,
@@ -58031,6 +58052,9 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
       state.isLoggedIn = false;
       state.currentUser = null;
     },
+    resetAuthError: function resetAuthError(state, payload) {
+      state.auth_error = null;
+    },
     updateList: function updateList(state, payload) {
       state.lists = payload;
     }
@@ -58074,8 +58098,8 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Mr-Fox\Documents\GitHub\todo_test\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Mr-Fox\Documents\GitHub\todo_test\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mr-fox/Documents/GitHub/todo_test/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mr-fox/Documents/GitHub/todo_test/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

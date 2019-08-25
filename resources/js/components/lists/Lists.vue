@@ -22,7 +22,11 @@
             <td>{{ list.name }}</td>
             <td>
               <router-link :to="`/lists/${list.id}`">View</router-link>
-              <span class="error text-danger" style="cursor: pointer;">Delete</span>
+              <span
+                @click.prevent="remove(list.id)"
+                class="error text-danger"
+                style="cursor: pointer;"
+              >Delete</span>
             </td>
           </tr>
         </template>
@@ -43,6 +47,16 @@ export default {
   computed: {
     lists() {
       return this.$store.getters.lists;
+    }
+  },
+  methods: {
+    remove(id) {
+      axios.delete(`/api/lists/${id}`).then(response => {
+        const index = this.lists.findIndex(list => list.id === id);
+        if (~index) {
+          this.lists.splice(index, 1);
+        }
+      });
     }
   }
 };

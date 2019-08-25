@@ -63,6 +63,9 @@
 import { register } from "../../helpers/auth";
 export default {
   name: "register",
+  mounted() {
+    this.$store.commit("resetAuthError");
+  },
   data() {
     return {
       form: {

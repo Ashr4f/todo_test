@@ -53,6 +53,9 @@
 import { login } from "../../helpers/auth";
 export default {
   name: "login",
+  mounted() {
+    this.$store.commit("resetAuthError");
+  },
   data() {
     return {
       form: {

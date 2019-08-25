@@ -6,7 +6,6 @@ export function register(credentials) {
             })
             .catch((err) => {
                 rej("Please provide valid informations");
-                console.error(err);
             });
     });
 }

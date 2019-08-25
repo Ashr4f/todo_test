@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Lists;
-
 
 class ListsController extends Controller
 {
@@ -26,5 +26,12 @@ class ListsController extends Controller
         return response()->json([
             "list" => $list
         ], 200);
+    }
+
+    public function delete($id)
+    {
+        $list = Lists::find($id);
+        $list->delete();
+        return response()->json('List has been deleted successfully', 200);
     }
 }
