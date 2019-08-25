@@ -1,16 +1,16 @@
 require('./bootstrap');
 
-window.Vue = require('vue');
-import VueRouter from "vue-router";
-import Vuex from "vuex";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 import {
     routes
-} from "./routes";
-import StoreData from "./store";
-import MainApp from "./components/MainApp.vue";
+} from './routes';
+import StoreData from './store';
+import MainApp from './components/MainApp.vue';
 import {
     initialize
-} from "./helpers/general";
+} from './helpers/general';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);

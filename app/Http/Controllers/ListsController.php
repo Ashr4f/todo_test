@@ -22,10 +22,18 @@ class ListsController extends Controller
     }
     public function new(Request $request)
     {
-        $list = Lists::create($request->only(["name"]));
+        $list = Lists::create($request->only(["name", "user"]));
         return response()->json([
             "list" => $list
         ], 200);
+    }
+
+    public function update($id, Request $request)
+    {
+        $list = Lists::find($id);
+        $list->update($request->all());
+        
+        return response()->json("List has been edited successfully", 200);
     }
 
     public function delete($id)

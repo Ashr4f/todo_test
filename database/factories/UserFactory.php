@@ -31,3 +31,11 @@ $factory->define(App\Lists::class, function (Faker $faker) {
         'name' => $faker->name,
     ];
 });
+
+$factory->define(App\Todos::class, function (Faker $faker) {
+    return [
+        'title' => "title",
+        'body' => "Content",
+        'list' => "0",
+    ];
+});

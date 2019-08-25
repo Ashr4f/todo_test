@@ -11,6 +11,7 @@ export default {
         loading: false,
         auth_error: null,
         lists: [],
+        todos: [],
     },
     getters: {
         isLoading(state) {
@@ -26,6 +27,9 @@ export default {
             return state.auth_error;
         },
         lists(state) {
+            return state.lists;
+        },
+        todos(state) {
             return state.lists;
         }
 
@@ -77,6 +81,9 @@ export default {
         },
         updateList(state, payload) {
             state.lists = payload;
+        },
+        updateTodos(state, payload) {
+            state.todos = payload;
         }
     },
     actions: {
@@ -93,6 +100,15 @@ export default {
                 }
             }).then((response) => {
                 context.commit("updateList", response.data.lists);
+            });
+        },
+        getTodos(context) {
+            axios.get("/api/todos", {
+                headers: {
+                    "Authorization": `Bearer ${context.state.currentUser.token}`
+                }
+            }).then((response) => {
+                context.commit("updateTodos", response.data.lists);
             });
         }
     }

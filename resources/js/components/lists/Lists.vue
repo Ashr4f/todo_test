@@ -1,37 +1,46 @@
 <template>
   <div>
-    <div class="btn-wrapper">
-      <router-link to="/lists/new" class="btn btn-primary btn-sm">New</router-link>
+    <div v-if="lists.length">
+      <div class="row m-0 align-items-start flex-column">
+        <router-link to="/lists/new" class="btn btn-success">Add more</router-link>
+      </div>
+      <br />
+      <br />
+      <div class="row m-0 justify-content-between">
+        <div
+          class="card mb-3"
+          style="flex: 0 0 48%; max-width: 48%;"
+          v-for="(list, index) in lists"
+          :key="list.id"
+        >
+          <div class="card-body">
+            <h2 class="card-title">{{ list.name }}</h2>
+
+            <h6 class="card-subtitle mb-2 text-muted">
+              <strong>ID:</strong>
+              {{ index + 1 }}
+            </h6>
+
+            <router-link
+              :to="{ path: '/lists/'+list.id+''}"
+              class="btn-sm btn btn-dark btn-block"
+            >View</router-link>
+
+            <router-link
+              :to="{ path: '/lists/'+list.id+'/edit'}"
+              class="btn-sm btn btn-primary btn-block"
+            >Edit</router-link>
+
+            <button class="btn btn-danger btn-block btn-sm" @click.prevent="remove(list.id)">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <table class="table">
-      <thead v-if="lists.length">
-        <th>ID</th>
-        <th>Name</th>
-        <th>Todos</th>
-        <th>Actions</th>
-      </thead>
-      <tbody>
-        <template v-if="!lists.length">
-          <tr>
-            <td colspan="4" class="text-center">No Lists Available</td>
-          </tr>
-        </template>
-        <template v-else>
-          <tr v-for="list in lists" :key="list.id">
-            <td>{{ list.id }}</td>
-            <td>{{ list.name }}</td>
-            <td>
-              <router-link :to="`/lists/${list.id}`">View</router-link>
-              <span
-                @click.prevent="remove(list.id)"
-                class="error text-danger"
-                style="cursor: pointer;"
-              >Delete</span>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
+    <div v-else class="row m-0 d-block">
+      <h3 class="float-left">Add your first list now</h3>
+      <router-link to="/lists/new" class="btn btn-success float-right">Create List</router-link>
+      <br />
+    </div>
   </div>
 </template>
 
@@ -39,9 +48,6 @@
 export default {
   name: "lists",
   mounted() {
-    if (this.lists.length) {
-      return;
-    }
     this.$store.dispatch("getLists");
   },
   computed: {

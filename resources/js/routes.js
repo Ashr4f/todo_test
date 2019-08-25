@@ -11,6 +11,10 @@ import ListsMain from './components/lists/Main.vue';
 import Lists from './components/lists/Lists.vue';
 import List from './components/lists/View.vue';
 import NewList from './components/lists/New.vue';
+import EditList from './components/lists/Edit.vue';
+
+import Todos from './components/lists//todos/Todos.vue';
+import NewTodo from './components/lists/todos/New.vue';
 
 /*
 import CreateItemComponent from './components/CreateItemComponent.vue';
@@ -31,123 +35,59 @@ import EditItemComponent from './components/EditItemComponent.vue';
  */
 
 export const routes = [{
-    path: "*",
-    component: PageNotFound
-}, {
-    path: "/",
-    component: Home,
-    meta: {
-        requiresAuth: true
-    }
-},
-{
-    path: "/register",
-    component: register,
-},
-{
-    path: "/login",
-    component: login,
-},
-{
-    path: "/profile",
-    component: Profile,
-    meta: {
-        requiresAuth: true
-    }
-}, {
-    path: '/lists',
-    component: ListsMain,
-    meta: {
-        requiresAuth: true
+        path: "*",
+        component: PageNotFound
+    }, {
+        path: "/",
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
     },
-    children: [
-        {
-            path: '/',
-            component: Lists
+    {
+        path: "/register",
+        component: register,
+    },
+    {
+        path: "/login",
+        component: login,
+    },
+    {
+        path: "/profile",
+        component: Profile,
+        meta: {
+            requiresAuth: true
+        }
+    }, {
+        path: '/lists',
+        component: ListsMain,
+        meta: {
+            requiresAuth: true
         },
-        {
-            path: 'new',
-            component: NewList
-        },
-        {
-            path: ':id',
-            component: List
-        }
-    ]
-}
-    /*
-    {
-        name: 'home',
-        path: '/',
-        component: HomeComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        name: 'createList',
-        path: '/createList',
-        component: CreateListComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        name: 'createItem',
-        path: '/createItem',
-        component: CreateItemComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        name: 'deleteItem',
-        path: '/deleteItem',
-        component: DeleteItemComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        name: 'deleteList',
-        path: '/deleteList',
-        component: DeleteListComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        name: 'editItem',
-        path: '/editItem/:id',
-        component: EditItemComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        name: 'editList',
-        path: '/editList/:id',
-        component: EditListComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    
-
-    {
-        name: 'item',
-        path: '/item',
-        component: ItemComponent,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    */
+        children: [{
+                path: '/',
+                component: Lists
+            },
+            {
+                path: 'new',
+                component: NewList
+            },
+            {
+                path: ':id',
+                component: List,
+            },
+            {
+                path: ':id/edit',
+                component: EditList
+            },
+            {
+                path: ':id/todos',
+                component: Todos,
+                children: [{
+                    path: 'new',
+                    component: NewTodo
+                }]
+            }
+        ]
+    }
 ];

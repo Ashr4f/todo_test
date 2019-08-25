@@ -1,19 +1,19 @@
 <template>
-  <div class="list-new">
-    <form @submit.prevent="add">
+  <div class="list-edit">
+    <form @submit.prevent="edit">
       <table class="table">
         <tr>
-          <th>Name</th>
+          <th>New Name</th>
           <td>
-            <input type="text" class="form-control" v-model="list.name" placeholder="List Name" />
+            <input type="text" class="form-control" v-model="list.name" placeholder="List New Name" />
           </td>
         </tr>
         <tr>
           <td>
-            <router-link to="/lists" class="btn">Cancel</router-link>
+            <router-link :to="{ path: '/lists/'+this.$route.params.id}" class="btn">Cancel</router-link>
           </td>
           <td class="text-right">
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Apply" class="btn btn-primary" />
           </td>
         </tr>
       </table>
@@ -29,26 +29,22 @@
 <script>
 import validate from "validate.js";
 export default {
-  name: "new-list",
+  name: "edit-list",
   data() {
     return {
       list: {
-        name: "",
-        user: this.$store.getters.currentUser.id
+        name: ""
       },
       errors: null
     };
   },
   computed: {
-    currentUser() {
-      return this.$store.getters.currentUser;
-    },
     lists() {
       return this.$store.getters.lists;
     }
   },
   methods: {
-    add() {
+    edit() {
       this.errors = null;
       const constraints = this.getConstraints();
       const errors = validate(this.$data.list, constraints);
@@ -56,9 +52,11 @@ export default {
         this.errors = errors;
         return;
       }
-      axios.post("/api/lists/new", this.$data.list).then(response => {
-        this.$router.push("/lists");
-      });
+      axios
+        .put(`/api/lists/edit/${this.$route.params.id}`, this.$data.list)
+        .then(response => {
+          this.$router.push("/lists");
+        });
     },
     getConstraints() {
       return {

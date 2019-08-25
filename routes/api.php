@@ -48,5 +48,13 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::get('lists', 'ListsController@all');
     Route::get('lists/{id}', 'ListsController@get');
     Route::post('lists/new', 'ListsController@new');
+    Route::put('lists/edit/{id}', 'ListsController@update');
     Route::delete('lists/{id}', 'ListsController@delete');
+});
+
+Route::group(['middleware' => 'jwt.auth'], function ($router) {
+    Route::get('todos', 'TodosController@all');
+    Route::get('todos/{id}', 'TodosController@get');
+    Route::post('todos/new', 'TodosController@new');
+    Route::delete('todos/{id}', 'TodosController@delete');
 });
