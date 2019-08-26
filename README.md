@@ -30,7 +30,7 @@ npm install
 cp -r .env.example .env
 ```
 
-### CREATE THE .env FILE (REMEMBER TO FILL IT WITH YOUR REAL DB INFOS)
+### CREATE THE database (optional)
 ```bash 
 mysql -u root;
 create database laravel;
